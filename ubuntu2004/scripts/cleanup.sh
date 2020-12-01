@@ -1,5 +1,11 @@
 #!/bin/bash -eux
 
+# packer uses ens3, vagrant needs ens5
+echo "replacing ens3 with ens5"
+sed -i "s/ens3/ens5/g" /etc/netplan/01-netcfg.yaml
+# apply changes
+netplan generate
+
 # Uninstall Ansible and remove PPA.
 apt -y remove --purge ansible
 apt-add-repository --remove ppa:ansible/ansible
